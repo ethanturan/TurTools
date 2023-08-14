@@ -7,7 +7,18 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageVersion>6.0.0</PackageVersion>
         <Authors>Ethan Turan</Authors>
+        <Description>A library of useful C# tools</Description>
+        <PackageProjectUrl>https://github.com/ethanturan/TuranTools</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/ethanturan/TuranTools</RepositoryUrl>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="LICENSE.txt" Pack="true" PackagePath=""/>
+    </ItemGroup>
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
