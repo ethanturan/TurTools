@@ -14,7 +14,7 @@ public static class BuilderExtensions
     {
         builder.Services.Configure<T>(builder.Configuration.GetSection(configKey));
         var options = new T();
-        await options.PopulateSecrets<T>(secretRetrievalDelegate);
+        await options.PopulateSecrets(secretRetrievalDelegate);
         builder.Configuration.Bind(configKey, options);
         return options;
     }

@@ -9,11 +9,11 @@ namespace TurTools.SecretAbstractions;
 /// </summary>
 public abstract class OptionsWithSecrets
 {
-    public async Task PopulateSecrets<T>(Func<string, Task<string?>> getSecret, SecretPopulationOptions? options = null)
+    public async Task PopulateSecrets(Func<string, Task<string?>> getSecret, SecretPopulationOptions? options = null)
     {
         options ??= new SecretPopulationOptions();
         
-        var optionsProps = typeof(T).GetProperties();
+        var optionsProps = GetType().GetProperties();
         
         var secretProperties = optionsProps
             .Where(prop => Attribute.IsDefined(prop, typeof(SecretKeyAttribute)))
