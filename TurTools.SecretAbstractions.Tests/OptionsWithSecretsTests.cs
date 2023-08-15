@@ -1,4 +1,4 @@
-using TurTools.SecretAbstractions;
+using TurTools.SecretAbstractions.Exceptions;
 using Xunit;
 
 namespace TurTools.SecretAbstractions.Tests;
@@ -6,27 +6,65 @@ namespace TurTools.SecretAbstractions.Tests;
 public class OptionsWithSecretsTests
 {
     [Fact]
-    public async Task PopulateSecrets_PopulatesSecrets()
+    public async Task PopulateSecrets_SetsSecretValue()
     {
-        var options = new TestOptionsWithSecrets
-        {
-            SecretKey1 = "this is a secret key"
-        };
+        const string secretKey = "secret key 23";
+        var secretValue = "secret value 56";
+        
+        var options = new TestOptionsWithSecrets(secretKey);
 
-        await options.PopulateSecrets<TestOptionsWithSecrets>(x =>
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
+        await options.PopulateSecrets(x =>
         {
-            Assert.Equal("this is a secret key", x);
-            return Task.FromResult("secret value");
+            Assert.Equal(secretKey, x);
+            return Task.FromResult(secretValue)!;
         });
         
-        Assert.Equal("secret value", options.SecretValue1);
-        Assert.Equal("this is a secret key", options.SecretKey1);
+        Assert.Equal(secretValue, options.SecretValue1);
+        Assert.Equal(secretKey, options.SecretKey1);
     }
-}
+    
+    [Fact]
+    public async Task PopulateSecrets_SetsNullValue()
+    {
+        const string secretKey = "secret key 23";
+        const string? secretValue = null;
+        
+        var options = new TestOptionsWithSecrets(secretKey);
 
-public class TestOptionsWithSecrets : OptionsWithSecrets
-{
-    [SecretKey(nameof(SecretValue1))]
-    public string SecretKey1 { get; set; }
-    public string SecretValue1 { get; set; }
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
+        await options.PopulateSecrets(x =>
+        {
+            Assert.Equal(secretKey, x);
+            return Task.FromResult(secretValue);
+        }, new SecretPopulationOptions()
+        {
+            AllowNullSecretValues = true
+        });
+        
+        Assert.Null(options.SecretValue1);
+        Assert.Equal(secretKey, options.SecretKey1);
+    }
+
+    
+    [Fact]
+    public async Task? PopulateSecret_ThrowsExceptionWhen_DelegateReturnsNullValue()
+    {
+        var options = new TestOptionsWithSecrets("anything");
+        await Assert.ThrowsAsync<NullSecretException>(async () =>
+        {
+            await options.PopulateSecrets(_ => Task.FromResult(null as string));
+        });
+    }
+    
+    [Fact]
+    public async Task? PopulateSecret_ThrowsExceptionWhen_TargetDoesNotExist()
+    {
+        var options = new TestOptionsNoValue("anything");
+        await Assert.ThrowsAsync<PropertyDoesNotExistException>(async () =>
+        {
+            await options.PopulateSecrets(_ => Task.FromResult("value"));
+        });
+    }
+    
 }
