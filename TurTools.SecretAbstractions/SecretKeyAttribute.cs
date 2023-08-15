@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace TurTools.SecretAbstractions;
 
 [AttributeUsage(AttributeTargets.Property)]

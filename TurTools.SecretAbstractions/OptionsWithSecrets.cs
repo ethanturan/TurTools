@@ -1,4 +1,5 @@
 using System.Reflection;
+using TurTools.SecretAbstractions.Exceptions;
 using NullReferenceException = System.NullReferenceException;
 
 namespace TurTools.SecretAbstractions;
@@ -8,8 +9,10 @@ namespace TurTools.SecretAbstractions;
 /// </summary>
 public abstract class OptionsWithSecrets
 {
-    public async Task PopulateSecrets<T>(Func<string, Task<string>> getSecret)
+    public async Task PopulateSecrets<T>(Func<string, Task<string?>> getSecret, SecretPopulationOptions? options = null)
     {
+        options ??= new SecretPopulationOptions();
+        
         var optionsProps = typeof(T).GetProperties();
         
         var secretProperties = optionsProps
@@ -27,8 +30,7 @@ public abstract class OptionsWithSecrets
 
                 if (string.IsNullOrEmpty(secretPropKey))
                 {
-                    throw new NullReferenceException(
-                        $"The value of the property with SecretKey attribute {secretPropName} is null or empty.");
+                    throw new NullReferenceException($"The value of the property with SecretKey attribute {secretPropName} is null or empty.");
                 }
 
                 return new SecretProperty(secretPropName, secretPropKey);
@@ -43,16 +45,23 @@ public abstract class OptionsWithSecrets
 
             if (secretPropTarget is null)
             {
-                throw new Exception(
-                    $"A SecretKeyAttribute points to a property ({secretProperty.Name}) in the options object which does not exist.");
+                throw new PropertyDoesNotExistException(secretProperty.Name);
             }
 
-            var secretValue = await getSecret(secretProperty.SecretStoreKey);
+            string? secretValue;
 
-            if (secretValue is null)
+            try
             {
-                throw new Exception(
-                    $"The secret with key {secretProperty.SecretStoreKey} could not be retrieved form the secret store");
+                secretValue = await getSecret(secretProperty.SecretStoreKey);
+            }
+            catch (Exception e)
+            {
+                throw new SecretRetrievalException(secretProperty, e);
+            }
+
+            if (secretValue is null && !options.AllowNullSecretValues)
+            {
+                throw new NullSecretException(secretProperty);
             }
             
             secretPropTarget.SetValue(this, secretValue);
