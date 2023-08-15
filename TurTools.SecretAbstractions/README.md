@@ -1,5 +1,5 @@
 ## Overview
-`TuranTools.SecretAbstractions` makes it easy to register options which contain both plain text configuration and secrets which need to be programatically retrieved by a unique identifier.
+`TurTools.SecretAbstractions` makes it easy to register options which contain both plain text configuration and secrets which need to be programatically retrieved by a unique identifier.
 
 ### OptionsWithSecrets
 Properties of objects which inherit from `OptionsWithSecrets` may use the `[SecretKey()]` attribute which specifies that the property contains the key to a value which is to be retrieved from a secret store.
