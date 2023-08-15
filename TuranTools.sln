@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TuranTools", "TuranTools\TuranTools.csproj", "{54355DDA-98A0-4D38-837E-087FEDCB1268}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurTools.SecretAbstractions", "TurTools.SecretAbstractions\TurTools.SecretAbstractions.csproj", "{AB2CAB15-0399-4A90-B7D2-6EA65CFA5CAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{92CB6508-0E36-4BA2-ACA1-779F3C47378E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurTools.SecretAbstractions.Tests", "TurTools.SecretAbstractions.Tests\TurTools.SecretAbstractions.Tests.csproj", "{B7A84BE7-303F-4C64-93EC-DFB9BE1CF3EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,13 @@ Global
 		{54355DDA-98A0-4D38-837E-087FEDCB1268}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54355DDA-98A0-4D38-837E-087FEDCB1268}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54355DDA-98A0-4D38-837E-087FEDCB1268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB2CAB15-0399-4A90-B7D2-6EA65CFA5CAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB2CAB15-0399-4A90-B7D2-6EA65CFA5CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB2CAB15-0399-4A90-B7D2-6EA65CFA5CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB2CAB15-0399-4A90-B7D2-6EA65CFA5CAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7A84BE7-303F-4C64-93EC-DFB9BE1CF3EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A84BE7-303F-4C64-93EC-DFB9BE1CF3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A84BE7-303F-4C64-93EC-DFB9BE1CF3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A84BE7-303F-4C64-93EC-DFB9BE1CF3EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
