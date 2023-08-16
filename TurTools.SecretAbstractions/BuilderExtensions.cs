@@ -24,7 +24,8 @@ public static class BuilderExtensions
         builder.Services.Configure<TOptionsWithSecrets>(builder.Configuration.GetSection(configKey));
         builder.Services.Configure<TOptionsWithSecrets>(options =>
         {
-            Task.FromResult(options.PopulateSecrets(async secretKey => await secretRetrievalDelegate(secretKey)));
+            var task = options.PopulateSecrets(async secretKey => await secretRetrievalDelegate(secretKey));
+            task.GetAwaiter().GetResult();
         });
 
         return builder;
