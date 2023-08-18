@@ -69,19 +69,17 @@ jobs:
       # https://www.nuget.org/packages/Meziantou.Framework.NuGetPackageValidation.Tool#readme-body-tab
       # If some rules are not applicable, you can disable them
       # using the --excluded-rules or --excluded-rule-ids option
-#      TODO
-#      - name: Validate package
-#        run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg") --excluded-rule "IconMustBeSet"
+      - name: Validate package
+        run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg") --excluded-rules IconMustBeSet 
 
-# TODO enable test automation
-#  run_test:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - name: Setup .NET
-#        uses: actions/setup-dotnet@v3
-#      - name: Run tests
-#        run: dotnet test --configuration Release
+  run_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+      - name: Run tests
+        run: dotnet test --configuration Release
 
   deploy:
     # Publish only when creating a GitHub Release
@@ -89,7 +87,7 @@ jobs:
     # You can update this logic if you want to manage releases differently
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
-    needs: [ validate_nuget ] # TODO also run tests
+    needs: [ validate_nuget, run_test ] 
     steps:
       # Download the NuGet package created in the previous job
       - uses: actions/download-artifact@v3
