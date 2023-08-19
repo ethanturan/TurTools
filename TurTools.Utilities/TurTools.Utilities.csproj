@@ -15,6 +15,7 @@
         <EnablePackageValidation>true</EnablePackageValidation>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
         <MinVerTagPrefix>utilities-</MinVerTagPrefix>
+        <MinVerIgnoreHeight>true</MinVerIgnoreHeight>
     </PropertyGroup>
 
     <PropertyGroup>
