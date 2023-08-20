@@ -1,5 +1,8 @@
 namespace TurTools.SecretAbstractions;
 
+/// <summary>
+/// Indicates that the property is an identifier for a secret which needs to be retrieved from an external store
+/// </summary>
 [AttributeUsage(AttributeTargets.Property)]
 public class SecretKeyAttribute : Attribute
 {
