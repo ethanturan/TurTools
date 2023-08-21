@@ -9,7 +9,16 @@ namespace TurTools.SecretAbstractions;
 /// </summary>
 public abstract class OptionsWithSecrets
 {
-    public async Task PopulateSecrets(Func<string, Task<string?>> getSecret, SecretPopulationOptions? options = null)
+    /// <summary>
+    /// Populates any secrets in these options as by <see cref="SecretKeyAttribute"/>
+    /// </summary>
+    /// <param name="secretRetrievalDelegate">A delegate which returns the secret corresponding to a given key (For example from Azure KeyVault)</param>
+    /// <param name="options">Secret retrieval options which modify the way secrets are populated</param>
+    /// <exception cref="NullReferenceException"></exception>
+    /// <exception cref="PropertyDoesNotExistException"></exception>
+    /// <exception cref="SecretRetrievalException"></exception>
+    /// <exception cref="NullSecretException"></exception>
+    public async Task PopulateSecrets(Func<string, Task<string?>> secretRetrievalDelegate, SecretPopulationOptions? options = null)
     {
         options ??= new SecretPopulationOptions();
         
@@ -52,7 +61,7 @@ public abstract class OptionsWithSecrets
 
             try
             {
-                secretValue = await getSecret(secretProperty.SecretStoreKey);
+                secretValue = await secretRetrievalDelegate(secretProperty.SecretStoreKey);
             }
             catch (Exception e)
             {

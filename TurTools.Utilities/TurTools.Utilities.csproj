@@ -5,7 +5,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Description>A library which simplifies registering configuration with secrets in DI</Description>
+        <Description>A library which contains c# utilities</Description>
         <Copyright>2023 Ethan Turan</Copyright>
         <PackageProjectUrl>https://github.com/ethanturan/TurTools</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ethanturan/TurTools</RepositoryUrl>
@@ -14,8 +14,7 @@
         <PackageTags>library</PackageTags>
         <EnablePackageValidation>true</EnablePackageValidation>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
-        
-        <MinVerTagPrefix>secretabstractions-</MinVerTagPrefix>
+        <MinVerTagPrefix>utilities-</MinVerTagPrefix>
         <MinVerIgnoreHeight>true</MinVerIgnoreHeight>
     </PropertyGroup>
 
@@ -23,10 +22,6 @@
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
-
-    <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    </ItemGroup>
 
     <ItemGroup>
         <None Include="LICENSE.txt" Pack="true" PackagePath="" />
@@ -38,9 +33,6 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
       <PackageReference Include="MinVer" Version="4.3.0">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
